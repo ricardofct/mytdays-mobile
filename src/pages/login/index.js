@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
 import { Text, TextInput, View, TouchableOpacity } from 'react-native';
-import { AsyncStorage } from 'react-native';
 
-import { LoginContainer } from './styles';
-
+import {
+    LoginContainer, LoginInput,
+    LoginTouchableOpacity, LoginTouchableOpacityText
+} from './styles';
 import api from './../../services/api'
 
 class LoginScreen extends Component {
@@ -46,7 +48,7 @@ class LoginScreen extends Component {
             this.setState({ error: null })
             const loginRes = await api.post('/auth/login', user);
             await AsyncStorage.setItem('@MyTDays:token', loginRes.data.token);
-            this.props.navigation.reset([NavigationActions.navigate({ routeName: 'Home' })], 0);
+            this.props.navigation.navigate('App');
             // this.props.navigation.navigate(
             //     {
             //         routeName: 'Home',
@@ -71,30 +73,28 @@ class LoginScreen extends Component {
 
         return (
             <LoginContainer>
-                <TextInput
-                    style={{ height: 40 }}
-                    placeholder="Type here to translate!"
+                <LoginInput
+                    placeholder="Email"
                     onChangeText={(email) => this.setState({ email })}
                     value={this.state.email}
                 />
 
-                <TextInput
-                    style={{ height: 40 }}
-                    placeholder="Type here to translate!"
+                <LoginInput
+                    placeholder="Pasword"
                     onChangeText={(password) => this.setState({ password })}
                     value={this.state.password}
                 />
 
-                <TouchableOpacity onPress={this.singUp} >
-                    <Text>
+                <LoginTouchableOpacity onPress={this.singUp} >
+                    <LoginTouchableOpacityText >
                         Submit
-                        </Text>
-                </TouchableOpacity>
+                        </LoginTouchableOpacityText>
+                </LoginTouchableOpacity>
 
                 <Text>
                     {this.state.error}
                 </Text>
-            </LoginContainer>
+            </LoginContainer >
 
         );
     }

@@ -19,6 +19,12 @@ class HomeScreen extends Component {
                 <Text>
                     Landing page
                 </Text>
+
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Auth')}>
+                    <Text>
+                        Logout
+                    </Text>
+                </TouchableOpacity>
             </View>
         );
     }

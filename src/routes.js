@@ -1,25 +1,11 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+
 import HomeScreen from './pages/home';
 import LoginScreen from './pages/login';
-
-// class HomeScreen extends React.Component {
-//     render() {
-//         return (
-//             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-//                 <Text>Home Screen</Text>
-
-//                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Details')} >
-//                     <Text>
-//                         Details
-//                         </Text>
-//                 </TouchableOpacity>
-//             </View>
-//         );
-//     }
-// }
+import AuthLoadingScreen from './pages/auth-loading';
 
 class DetailsScreen extends React.Component {
     render() {
@@ -38,16 +24,27 @@ class DetailsScreen extends React.Component {
     }
 }
 
+const AuthNavigator = createStackNavigator(
+    {
+        Login: LoginScreen
+    }
+)
+
 const AppNavigator = createStackNavigator(
     {
-        Home: HomeScreen,
-        Details: DetailsScreen,
-        Login: LoginScreen
-    },
-    {
-        initialRouteName: 'Login',
+        Home: HomeScreen
     }
 );
 
 
-export default Routes = createAppContainer(AppNavigator);
+export default Routes = createAppContainer(
+    createSwitchNavigator(
+        {
+            AuthLoading: AuthLoadingScreen,
+            App: AppNavigator,
+            Auth: AuthNavigator
+        },
+        {
+            initialRouteName: 'AuthLoading',
+        }
+    ));
