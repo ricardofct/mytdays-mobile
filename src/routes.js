@@ -6,27 +6,15 @@ import { createStackNavigator } from 'react-navigation-stack';
 import HomeScreen from './pages/home';
 import LoginScreen from './pages/login';
 import AuthLoadingScreen from './pages/auth-loading';
-
-class DetailsScreen extends React.Component {
-    render() {
-        return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Text>Details Screen</Text>
-
-
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')} >
-                    <Text>
-                        Home
-                        </Text>
-                </TouchableOpacity>
-            </View>
-        );
-    }
-}
+import SignupScreen from './pages/signup';
 
 const AuthNavigator = createStackNavigator(
     {
-        Login: LoginScreen
+        Login: LoginScreen,
+        Signup: SignupScreen
+    },
+    {
+        initialRouteName: 'Login'
     }
 )
 

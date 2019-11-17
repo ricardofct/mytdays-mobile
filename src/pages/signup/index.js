@@ -4,16 +4,20 @@ import { Text, TextInput, View, TouchableOpacity } from 'react-native';
 
 import {
     LoginContainer, LoginInput,
-    LoginTouchableOpacity, LoginTouchableOpacityText
+    LoginTouchableOpacity, LoginTouchableOpacityText, LoginScrollView
 } from './styles';
 import api from './../../services/api'
 
-class LoginScreen extends Component {
+class SignupScreen extends Component {
     static navigationOptions = {
-        title: 'Login',
+        title: 'Registo',
     };
 
+    emailTextInput;
+    passwordTextInput;
+
     state = {
+        name: '',
         email: '',
         password: '',
         error: null
@@ -39,16 +43,18 @@ class LoginScreen extends Component {
         }
     }
 
-    signIn = async () => {
+    signUp = async () => {
         const user = {
+            name: this.state.name,
             email: this.state.email,
             password: this.state.password
         };
         try {
             this.setState({ error: null })
-            const loginRes = await api.post('/auth/login', user);
+            const loginRes = await api.post('/auth/register', user);
             await AsyncStorage.setItem('@MyTDays:token', loginRes.data.token);
             this.props.navigation.navigate('App');
+
         } catch (e) {
             this.setState({ error: e.data ? e.data.error : e.problem })
         }
@@ -56,32 +62,34 @@ class LoginScreen extends Component {
 
 
     render() {
-        const { navigate } = this.props.navigation;
-
         return (
             <LoginContainer>
                 <LoginInput
+                    placeholder="Nome"
+                    returnKeyType={'next'}
+                    onSubmitEditing={() => { this.emailTextInput.focus(); }}
+                    blurOnSubmit={false}
+                    onChangeText={(name) => this.setState({ name })}
+                    value={this.state.name}
+                />
+                <LoginInput
                     placeholder="Email"
+                    returnKeyType={'next'}
+                    ref={(input) => { this.emailTextInput = input; }}
+                    blurOnSubmit={false}
+                    onSubmitEditing={() => { this.passwordTextInput.focus(); }}
                     onChangeText={(email) => this.setState({ email })}
                     value={this.state.email}
                 />
-
                 <LoginInput
-                    placeholder="Senha"
+                    placeholder="Password"
                     secureTextEntry={true}
+                    ref={(input) => { this.passwordTextInput = input; }}
                     onChangeText={(password) => this.setState({ password })}
                     value={this.state.password}
                 />
 
-                <LoginTouchableOpacity onPress={this.signIn} >
-                    <LoginTouchableOpacityText >
-                        Entrar
-                        </LoginTouchableOpacityText>
-                </LoginTouchableOpacity>
-
-                <LoginTouchableOpacity
-                    onPress={() => { navigate('Signup') }}
-                >
+                <LoginTouchableOpacity onPress={this.signUp} >
                     <LoginTouchableOpacityText >
                         Registar
                         </LoginTouchableOpacityText>
@@ -91,9 +99,8 @@ class LoginScreen extends Component {
                     {this.state.error}
                 </Text>
             </LoginContainer >
-
         );
     }
 }
 
-export default LoginScreen;
+export default SignupScreen;
