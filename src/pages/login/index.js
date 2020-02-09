@@ -14,8 +14,10 @@ class LoginScreen extends Component {
     };
 
     state = {
-        email: '',
-        password: '',
+        email: 'trindade@t.pt',
+        password: '123',
+        // email: 'r@r.pt',
+        // password: '123',
         error: null
     };
 

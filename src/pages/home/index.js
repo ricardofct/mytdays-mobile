@@ -20,6 +20,12 @@ class HomeScreen extends Component {
                     Landing page
                 </Text>
 
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('DiaryForm')}>
+                    <Text>
+                        Criar diária
+                    </Text>
+                </TouchableOpacity>
+
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Auth')}>
                     <Text>
                         Logout

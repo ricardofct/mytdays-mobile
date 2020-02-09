@@ -7,6 +7,7 @@ import HomeScreen from './pages/home';
 import LoginScreen from './pages/login';
 import AuthLoadingScreen from './pages/auth-loading';
 import SignupScreen from './pages/signup';
+import DiaryFormScreen from './pages/diary-form';
 
 const AuthNavigator = createStackNavigator(
     {
@@ -20,7 +21,11 @@ const AuthNavigator = createStackNavigator(
 
 const AppNavigator = createStackNavigator(
     {
-        Home: HomeScreen
+        Home: HomeScreen,
+        DiaryForm: DiaryFormScreen
+    },
+    {
+        initialRouteName: 'Home'
     }
 );
 
